@@ -21,8 +21,6 @@ for(int i=0;i<size;i++)
     numOne++;
   }
 }
-
 cout << "Number of zeroes: "<<numZero<<endl;
-cout << "Number of ones: "<<numOne<<endl;
-  
+cout << "Number of ones: "<<numOne<<endl;  
 }
