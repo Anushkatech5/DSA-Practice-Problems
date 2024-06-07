@@ -1,27 +1,37 @@
 //Replace Words
 
 class Solution {
-    //solve it with tries instead
     public String replaceWords(List<String> dict, String sentence) {
-        Set<String> s = new HashSet<>(dict);
+        String[] words = sentence.split(" ");
+        // Sort the dictionary by word length
+        Collections.sort(dict, Comparator.comparingInt(String::length));
         StringBuilder ans = new StringBuilder();
-        List<String> temp = new ArrayList<>(
-            Arrays.asList(sentence.split(" "))
-        );
-        
-        for (String t : temp) {
-            int i = 0;
-            while (i <= t.length()) {
-                String curr = t.substring(0, i++);
-                if (s.contains(curr)) {
-                    ans.append(curr).append(" ");
+
+        // Iterate through each word in the sentence
+        for (String word : words) 
+        {
+            boolean replaced = false;
+
+            // Iterate through the sorted dictionary
+            for (String root : dict) 
+            {
+                
+                if (word.startsWith(root)) 
+                {
+                    ans.append(root).append(" ");
+                    replaced = true;
                     break;
                 }
-
-                if (i == t.length() + 1) ans.append(t).append(" ");
+            }
+            if (!replaced) 
+            {
+                ans.append(word).append(" ");
             }
         }
         
-        ans.deleteCharAt(ans.length() - 1); 
+        // Deleting extra space at the end
+        ans.deleteCharAt(ans.length() - 1);
         return ans.toString();
     }
+}
+
