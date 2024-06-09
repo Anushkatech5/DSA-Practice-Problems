@@ -1,21 +1,23 @@
 //Subarray Sums Divisible by K
 
 import java.util.Arrays;
-
 class Solution {
     public int subarraysDivByK(int[] nums, int k) {
-        int[] modCnt = new int[k];
-        Arrays.fill(modCnt, 0);
-        int curMod = 0;
-        int subCnt = 0;
-        modCnt[0] = 1;
 
+        //prefix sum topic
+        int[] remCount = new int[k];
+        int count = 0;
+        int sum = 0;
+        
         for (int num : nums) {
-            curMod = ((curMod + num % k) + k) % k;
-            subCnt += modCnt[curMod];
-            modCnt[curMod]++;
+            sum = (sum + num) % k; // Update the running sum modulo k
+            if (sum < 0) sum += k; // Ensure sum is non-negative
+            count += remCount[sum]; // Add the count of subarrays with the same remainder
+            if (sum == 0) count++; // If the sum itself is divisible by k, increment count
+            remCount[sum]++; // Increment the count of subarrays with the current remainder
         }
-
-        return subCnt;
+        
+        return count;
     }
 }
+
